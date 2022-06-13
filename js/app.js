@@ -35,12 +35,13 @@ const Game = {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
     },
     createAll() {
-        this.player = new Player(this.ctx, 500, 500, 100, 100)
-        
+        this.player = new Player(this.ctx, this.canvasSize)
+        this.enemy = new Enemy(this.ctx, this.canvasSize)
 
     },
     drawAll() {
-        this.player.createPlayer()
+        this.player.draw()
+        this.enemy.draw()
     },
     setEventListeners() {
         document.onkeydown = event => {
@@ -51,9 +52,7 @@ const Game = {
                     break;
                 case this.keys.moveRight: this.player.moveRight()
                     break;
-                case this.keys.shot: this.player.shot()
-                    break;
-                case this.keys.moveDown: this.player.moveDown()
+                case this.keys.shot: this.player.shoot()
                     break;
             }
         }

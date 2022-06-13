@@ -1,41 +1,37 @@
 class Player {
-    constructor(ctx, playerPosX, playerPosY, playerSizeW, playerSizeH) {
+    constructor(ctx, canvasSize) {
         this.ctx = ctx
+        this.canvasSize = canvasSize
+        this.base = this.canvasSize.h * .8
         this.playerPos = {
-            x: playerPosX,
-            y: playerPosY
+            x: this.canvasSize.w * .1,
+            y: this.canvasSize.h * .8
         }
-        this.playerSize = {
-            w: playerSizeW,
-            h: playerSizeH
-        }
-        this.playerSpeed = { x: 50, y: 0 }
+        this.playerSpeed = { x: 2, y: 1 }
         this.physics = { gravity: 0.4 }
-        // this.canvasSize = {
-        //     w: canvasSizeW,
-        //     h: canvasSizeH 
-        // }
+        this.bullets = [];
 
         this.init()
     }
     init() {
-        this.jump()
-        this.moveLeft()
-        this.moveRight()
-        this.shot()
-        this.createPlayer()
-        this.moveDown()
+        this.draw()
+
     }
-    createPlayer() {
-        this.ctx.fillStyle = 'blue'
-        this.ctx.fillRect(this.playerPos.x, this.playerPos.y, this.playerSize.w, this.playerSize.h)
+    draw() {
+        this.ctx.fillStyle = 'green'
+        this.ctx.fillRect(this.playerPos.x, this.playerPos.y, 75, 100)
+        this.move()
+        this.drawBullets()
+    }
+    drawBullets() {
+        this.bullets.forEach(bullet => bullet.draw())       
+        this.clearBullets()       
     }
     jump() {
-        this.playerPos.y -= 40;
-        this.playerSpeed.y += 8
-        // if (this.playerPos.y === window.innerHeight / 1.3) {    //no funciona, revisar
-            
-        // }
+        if (this.playerPos.y === this.base) {
+            this.playerPos.y -= this.playerSpeed.y
+            this.playerSpeed.y -= 8
+        }
     }
     moveLeft() {
         this.playerPos.x -= 20
@@ -43,12 +39,21 @@ class Player {
     moveRight() {
         this.playerPos.x += 20
     }
-    moveDown() {
-        if (this.playerPos.y < window.innerHeight - this.playerSize.h - 50) {
-            this.playerPos.y += 40
+    shoot() {
+        this.bullets.push(new Bullet(this.ctx, this.playerPos, this.canvasSize))
+    }
+    move() {
+        if (this.playerPos.y < this.base) {
+            this.playerSpeed.y += this.physics.gravity / 3
+            this.playerPos.y += this.playerSpeed.y
+            // this.playerPos.x += this.playerSpeed.x
+        }
+        else {
+            this.playerPos.y = this.base;
+            this.playerSpeed.y = 1;
         }
     }
-    shot() {
-
+    clearBullets() {        
+        this.bullets = this.bullets.filter(bull => bull.playerPos.x <= this.canvasSize.w)
     }
 }
