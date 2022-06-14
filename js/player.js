@@ -63,6 +63,6 @@ class Player {
     }
 
     clearBullets() {
-        this.bullets = this.bullets.filter(bull => bull.playerPos.x <= this.canvasSize.w)
+        this.bullets = this.bullets.filter(bull => bull.playerBulletPos.x <= this.canvasSize.w)
     }
 }

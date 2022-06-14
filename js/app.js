@@ -14,10 +14,12 @@ const Game = {
         shot: 'Space',
         moveDown: 'ArrowDown',
     },
+
     canvasSize: {
         w: undefined,
         h: undefined
     },
+
     init(id) {
         this.canvasDom = document.querySelector(id)
         this.ctx = this.canvasDom.getContext('2d')
@@ -26,23 +28,28 @@ const Game = {
         this.createAll()
         this.start()
     },
+
     setDimensions() {
         this.canvasSize.w = window.innerWidth
         this.canvasSize.h = window.innerHeight
         this.canvasDom.setAttribute('width', this.canvasSize.w)
         this.canvasDom.setAttribute('height', this.canvasSize.h)
     },
+
     clearAll() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
     },
+
     createAll() {
         this.player = new Player(this.ctx, this.canvasSize)
         this.enemy = new Enemy(this.ctx, this.canvasSize)
     },
+
     drawAll() {
         this.player.draw()
         this.enemy.draw()
     },
+
     setEventListeners() {
         document.onkeydown = event => {
             switch (event.code) {
@@ -57,16 +64,44 @@ const Game = {
             }
         }
     },
+
     start() {
         setInterval(() => {
             this.clearAll()
-            
+            this.drawAll()  
+            this.checkPlayerCollision()
+            this.checkEnemyCollision()
             this.framesIndex++
-            if (this.framesIndex % 100 === 0) {
+            if (this.framesIndex % 150 === 0) {
                 this.enemy.createBullet()
-                console.log(this.enemy.enemyBullets)
             }
-            this.drawAll()
         }, 1000 / this.FPS)
+    },
+    
+    checkPlayerCollision(){
+        this.enemy.enemyBullets.forEach(bullet => {
+            if (bullet.bulletPos.x < this.player.playerPos.x + 75 &&
+                bullet.bulletPos.x + 25 > this.player.playerPos.x &&
+                bullet.bulletPos.y < this.player.playerPos.y + 100 &&
+                10 + bullet.bulletPos.y > this.player.playerPos.y) {
+                    //split para que desaparezcan las balas
+                    alert('Game Over!')
+                }
+            
+        });
+        
+        console.log(this.enemy)
+
+    },
+
+    checkEnemyCollision() {
+        this.player.bullets.forEach(bulletEl => {
+            if (bulletEl.playerBulletPos.x > this.enemy.enemyPos.x - 75 &&
+                bulletEl.playerBulletPos.x - 25 < this.enemy.enemyPos.x &&
+                bulletEl.playerBulletPos.y > this.enemy.enemyPos.y - 100 &&
+                10 - bulletEl.playerBulletPos.y < this.enemy.enemyPos.y) {
+                    alert('Congratulations, you win!')
+                }
+        })
     }
 }

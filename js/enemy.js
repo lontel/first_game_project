@@ -42,6 +42,6 @@ class Enemy {
         this.enemyBullets.push(new EnemyBullet(this.ctx, this.enemyPos, this.canvasSize))
     }
     clearBullets() {
-        this.enemyBullets = this.enemyBullets.filter(bull => bull.enemyPos.x <= this.canvasSize.w)
+        this.enemyBullets = this.enemyBullets.filter(bull => bull.bulletPos.x <= this.canvasSize.w)
     }
 }
