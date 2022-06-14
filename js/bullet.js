@@ -1,4 +1,5 @@
 class Bullet {
+
     constructor(ctx, playerPos, canvasSize) {
         this.ctx = ctx
         this.playerPos = { x: playerPos.x, y: playerPos.y }

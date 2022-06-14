@@ -6,6 +6,7 @@ const Game = {
     canvasDom: undefined,
     ctx: undefined,
     FPS: 60,
+    framesIndex: 0,
     keys: {
         jump: 'ArrowUp',
         moveLeft: 'ArrowLeft',
@@ -22,8 +23,8 @@ const Game = {
         this.ctx = this.canvasDom.getContext('2d')
         this.setDimensions()
         this.setEventListeners()
-        this.start()
         this.createAll()
+        this.start()
     },
     setDimensions() {
         this.canvasSize.w = window.innerWidth
@@ -37,7 +38,6 @@ const Game = {
     createAll() {
         this.player = new Player(this.ctx, this.canvasSize)
         this.enemy = new Enemy(this.ctx, this.canvasSize)
-
     },
     drawAll() {
         this.player.draw()
@@ -60,6 +60,12 @@ const Game = {
     start() {
         setInterval(() => {
             this.clearAll()
+            
+            this.framesIndex++
+            if (this.framesIndex % 100 === 0) {
+                this.enemy.createBullet()
+                console.log(this.enemy.enemyBullets)
+            }
             this.drawAll()
         }, 1000 / this.FPS)
     }
