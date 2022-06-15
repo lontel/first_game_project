@@ -10,7 +10,7 @@ class Player {
         this.playerSpeed = { x: 2, y: 1 }
         this.physics = { gravity: 0.4 }
         this.bullets = []
-        this.lives = 200
+        this.lives = 2
         this.score = 0
 
         this.init()

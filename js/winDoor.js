@@ -2,7 +2,7 @@ class WinDoor {
     constructor(ctx, canvasSize) {
         this.ctx = ctx
         this.canvasSize = canvasSize
-        this.doorPos = { x: this.canvasSize.w -5, y: this.canvasSize.h * .8 }
+        this.doorPos = { x: this.canvasSize.w + 5, y: this.canvasSize.h * .8 }
 
         this.init()
     }
