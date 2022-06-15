@@ -19,7 +19,7 @@ class Enemy {
         this.ctx.fillStyle = 'red'
         this.ctx.fillRect(this.enemyPos.x, this.enemyPos.y, 75, 100)
         this.move()
-        this.drawBullets()        
+        this.drawBullets()
     }
 
     drawBullets() {
@@ -34,6 +34,7 @@ class Enemy {
         }
         else {
             this.enemyPos.y = this.base;
+            this.enemyPos.x -= 1
             this.enemySpeed.y = 1;
             this.drawBullets()
         }

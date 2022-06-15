@@ -6,10 +6,8 @@ class EnemyBullet {
         this.canvasSize = canvasSize
     }
     drawBullet() {
-        if (this.bulletPos.y > this.canvasSize.h * .8) {
-            this.ctx.fillStyle = 'black'
-            this.ctx.fillRect(this.bulletPos.x, this.bulletPos.y + 25, 25, 10)
-        }
+        this.ctx.fillStyle = 'black'
+        this.ctx.fillRect(this.bulletPos.x, this.bulletPos.y + 25, 25, 10)
         this.move()
     }
     move() {
