@@ -1,4 +1,5 @@
 class WinDoor {
+
     constructor(ctx, canvasSize) {
         this.ctx = ctx
         this.canvasSize = canvasSize
@@ -17,6 +18,7 @@ class WinDoor {
         this.ctx.drawImage(this.image, this.doorPos.x, this.doorPos.y * .8, 200, 200)
         this.move()
     }
+    
     move() {
         this.doorPos.x -= 1
     }

@@ -4,13 +4,10 @@ class Background {
         this.ctx = ctx;
         this.canvasSize = canvasSize
         this.backgroundPos = { x: this.canvasSize.w , y: this.canvasSize.h}
-
         this.image = new Image()
         this.image.src = "./img/jungleBackground.png"
-
         this.posX = 0
         this.posY = 0
-
         this.velX = 1;
 
         this.init()

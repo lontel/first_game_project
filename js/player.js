@@ -1,4 +1,5 @@
 class Player {
+
     constructor(ctx, canvasSize) {
         this.ctx = ctx
         this.canvasSize = canvasSize
@@ -12,7 +13,6 @@ class Player {
         this.bullets = []
         this.lives = 200
         this.score = 0
-        //this.frameNum = [1, 2, 3, 4, 5, 6, 7, 8]
         this.bulletSound = new Audio('./sounds/bullet.wav')
         this.image = new Image();
         this.image.src = './img/mono/monkey_run_1.png'

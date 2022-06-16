@@ -1,4 +1,5 @@
 class Enemy {
+
     constructor(ctx, canvasSize) {
         this.ctx = ctx
         this.canvasSize = canvasSize
@@ -42,9 +43,11 @@ class Enemy {
             this.drawBullets()
         }
     }
+
     createBullet() {
         this.enemyBullets.push(new EnemyBullet(this.ctx, this.enemyPos, this.canvasSize))
     }
+    
     clearBullets() {
         this.enemyBullets = this.enemyBullets.filter(bull => bull.bulletPos.x <= this.canvasSize.w)
     }
