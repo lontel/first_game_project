@@ -65,9 +65,11 @@ const Game = {
     clearAll() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
     },
+
     createEnemy() {
         this.enemyArr.push(new Enemy(this.ctx, this.canvasSize))
     },
+
     createPoweUp() {
         this.powerUpArr.push(new PowerUp(this.ctx, this.canvasSize))
     },
@@ -232,7 +234,7 @@ const Game = {
     score() {
         this.ctx.font = "30px Arial"
         this.ctx.fillText(`Score: ${this.num}`, 10, 50)
-        this.num = this.player.score 
+        this.num = this.player.score
     },
 
     lifes() {
