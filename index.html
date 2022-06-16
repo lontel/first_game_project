@@ -10,9 +10,40 @@
 </head>
 
 <body>
-    <canvas id="canvasID">
+    <section class="start">
+        <div id="div">
+            <button class="btn-shine">
+                <span>Press button to start</span>
+            </button>
+        </div>
+    </section>
+
+
+    <canvas id="canvasID" class="disabled">
 
     </canvas>
+
+
+    <section class="disabled" id="gameOver">
+        <div id="lastDiv">
+            <button class="btn-shine" id="gameOverButt">
+                <span id="tryAgain">Try Again</span>
+            </button>
+            <img src="./img/game over.png" alt="gameOver ">
+        </div>
+    </section>
+
+    <section class="disabled" id="winner">
+        <div id="winnerDiv">
+            <button class="btn-shine" id="winButt">
+                <span id="tryAgain">Play again?</span>
+            </button>
+            <img src="./img/monkey-png-transparent-3 edit.png" alt="winning monkey ">
+        </div>
+    </section>
+
+
+    <script src="./js/background.js"></script>
     <script src="./js/winDoor.js"></script>
     <script src="./js/powerUp.js"></script>
     <script src="./js/enemyBullet.js"></script>

@@ -3,6 +3,8 @@ class WinDoor {
         this.ctx = ctx
         this.canvasSize = canvasSize
         this.doorPos = { x: this.canvasSize.w + 5, y: this.canvasSize.h * .8 }
+        this.image = new Image();
+        this.image.src = "./img/winDoorBannana.png"
 
         this.init()
     }
@@ -12,8 +14,7 @@ class WinDoor {
     }
 
     draw() {
-        this.ctx.fillStyle = 'yellow'
-        this.ctx.fillRect(this.doorPos.x, this.doorPos.y, 75, 100)
+        this.ctx.drawImage(this.image, this.doorPos.x, this.doorPos.y * .8, 200, 200)
         this.move()
     }
     move() {

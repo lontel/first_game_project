@@ -10,20 +10,22 @@ class Player {
         this.playerSpeed = { x: 2, y: 1 }
         this.physics = { gravity: 0.4 }
         this.bullets = []
-        this.lives = 2
+        this.lives = 200
         this.score = 0
+        //this.frameNum = [1, 2, 3, 4, 5, 6, 7, 8]
+        this.bulletSound = new Audio('./sounds/bullet.wav')
+        this.image = new Image();
+        this.image.src = './img/mono/monkey_run_1.png'
 
         this.init()
     }
 
     init() {
         this.draw()
-
     }
 
     draw() {
-        this.ctx.fillStyle = 'green'
-        this.ctx.fillRect(this.playerPos.x, this.playerPos.y, 75, 100)
+        this.ctx.drawImage(this.image, this.playerPos.x, this.playerPos.y, 75, 100)
         this.move()
         this.drawBullets()
     }
@@ -56,7 +58,6 @@ class Player {
         if (this.playerPos.y < this.base) {
             this.playerSpeed.y += this.physics.gravity / 3
             this.playerPos.y += this.playerSpeed.y
-            // this.playerPos.x += this.playerSpeed.x
         }
         else {
             this.playerPos.y = this.base;

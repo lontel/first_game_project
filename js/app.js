@@ -5,9 +5,16 @@ const Game = {
     version: '1.0.0',
     canvasDom: undefined,
     ctx: undefined,
+    background: undefined,
     FPS: 60,
+    audio: new Audio('./sounds/sound1.wav'),
+    gameOverAudio: new Audio('./sounds/gameOver.wav'),
+    winAudio: new Audio('./sounds/win.wav'),
+    jumpAudio: new Audio('./sounds/jump.wav'),
+    powerAudio: new Audio('./sounds/power.wav'),
+    finalAudio: new Audio('./sounds/final.wav'),
     framesIndex: 0,
-    winningScore: 3,
+    winningScore: 10,
     enemyArr: [],
     powerUpArr: [],
     keys: {
@@ -30,6 +37,8 @@ const Game = {
         this.setEventListeners()
         this.createAll()
         this.start()
+        this.audio.play()
+        this.createPoweUp()
     },
 
     setDimensions() {
@@ -39,22 +48,37 @@ const Game = {
         this.canvasDom.setAttribute('height', this.canvasSize.h)
     },
 
+    reset() {
+        this.enemyArr = []
+        this.powerUpArr = []
+        this.player.lives = 30000
+    },
+
+    gameOver() {
+        clearInterval(this.intervalId)
+        document.querySelector('#canvasID').classList.toggle("disabled")
+        document.querySelector('#gameOver').classList.toggle("disabled")
+        this.audio.pause()
+        this.gameOverAudio.play()
+    },
+
     clearAll() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
     },
     createEnemy() {
         this.enemyArr.push(new Enemy(this.ctx, this.canvasSize))
     },
-    createPoweUp(){
-        this.powerUpArr.push(new PowerUp(this.ctx, this.canvasSize)) 
+    createPoweUp() {
+        this.powerUpArr.push(new PowerUp(this.ctx, this.canvasSize))
     },
 
     createAll() {
         this.player = new Player(this.ctx, this.canvasSize)
-        
+        this.background = new Background(this.ctx, this.canvasSize)
     },
 
     drawAll() {
+        this.background.draw()
         this.player.draw()
         this.enemyArr.forEach(enemy => enemy.draw())
         if (this.player.score === this.winningScore) { this.winDoor.draw() }
@@ -64,20 +88,26 @@ const Game = {
     setEventListeners() {
         document.onkeydown = event => {
             switch (event.code) {
-                case this.keys.jump: this.player.jump()
+                case this.keys.jump: {
+                    this.player.jump()
+                    this.jumpAudio.play()
+                }
                     break;
                 case this.keys.moveLeft: this.player.moveLeft()
                     break;
                 case this.keys.moveRight: this.player.moveRight()
                     break;
-                case this.keys.shot: this.player.shoot()
+                case this.keys.shot: {
+                    this.player.shoot()
+                    this.player.bulletSound.play()
+                }
                     break;
             }
         }
     },
 
     start() {
-        setInterval(() => {
+        this.intervalId = setInterval(() => {
             this.framesIndex++
             this.clearAll()
             this.drawAll()
@@ -85,8 +115,10 @@ const Game = {
             this.checkEnemyCollision()
             this.checkPlayerEnemyCollision()
             this.checkPowerUpCollision()
-            if(this.framesIndex % 200 === 0){
-                if (this.player.score < this.winningScore){
+            this.score()
+            this.lifes()
+            if (this.framesIndex % 300 === 0) {
+                if (this.player.score < this.winningScore) {
                     this.createPoweUp()
                 }
             }
@@ -95,13 +127,15 @@ const Game = {
                     enemy.createBullet()
                 })
             }
-            if (this.framesIndex % 300 === 0) {
+            if (this.framesIndex % 100 === 0) {
                 if (this.player.score < this.winningScore) {
                     this.createEnemy()
                 }
             }
             if (this.player.score === this.winningScore) {
                 this.checkDoorCollision()
+                this.audio.pause()
+                this.winAudio.play()
             }
         }, 1000 / this.FPS)
     },
@@ -115,11 +149,11 @@ const Game = {
                     10 + bullet.bulletPos.y > this.player.playerPos.y) {
                     arr.splice(index, 1)
 
-                    if (this.player.lives > 0) {
+                    if (this.player.lives > 1) {
                         console.log(this.player.lives)
                         this.player.lives--
                     } else {
-                        alert('Game Over!')
+                        this.gameOver()
                     }
 
                 }
@@ -152,7 +186,10 @@ const Game = {
             this.winDoor.doorPos.x - 25 < this.player.playerPos.x &&
             this.winDoor.doorPos.y > this.player.playerPos.y - 100 &&
             10 - this.winDoor.doorPos.y < this.player.playerPos.y) {
-            alert('you win!')
+            this.winning()
+            this.winAudio.pause()
+            this.finalAudio.play()
+
         }
     },
 
@@ -167,22 +204,41 @@ const Game = {
                     this.player.lives--
                     arr.splice(index, 1)
                 } else {
-                    alert('Game Over!')
+                    this.gameOver()
                 }
             }
         })
     },
 
-    checkPowerUpCollision(){
+    checkPowerUpCollision() {
         this.powerUpArr.forEach((powerUp, index, arr) => {
             if (powerUp.powerUpPos.x > this.player.playerPos.x - 75 &&
                 powerUp.powerUpPos.x - 25 < this.player.playerPos.x &&
                 powerUp.powerUpPos.y > this.player.playerPos.y - 100 &&
-                10 - powerUp.powerUpPos.y < this.player.playerPos.y){
-                    arr.splice(index, 1)
-                    this.player.lives++    
-                }
+                10 - powerUp.powerUpPos.y < this.player.playerPos.y) {
+                arr.splice(index, 1)
+                this.player.lives++
+                this.powerAudio.play()
+            }
         })
+    },
+
+    winning() {
+        clearInterval(this.intervalId)
+        document.querySelector('#canvasID').classList.toggle("disabled")
+        document.querySelector('#winner').classList.toggle("disabled")
+    },
+
+    score() {
+        this.ctx.font = "30px Arial"
+        this.ctx.fillText(`Score: ${this.num}`, 10, 50)
+        this.num = this.player.score 
+    },
+
+    lifes() {
+        this.ctx.font = "30px Arial"
+        this.ctx.fillText(`Lives: ${this.num2}`, 160, 50)
+        this.num2 = this.player.lives
     }
 
 }

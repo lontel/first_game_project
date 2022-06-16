@@ -4,10 +4,11 @@ class EnemyBullet {
         this.bulletPos = { x: enemyPos.x, y: enemyPos.y }
         this.enemyBulletSpeed = { x: 5, y: 1 }
         this.canvasSize = canvasSize
+        this.image = new Image()
+        this.image.src = "./img/denada.png"
     }
     drawBullet() {
-        this.ctx.fillStyle = 'black'
-        this.ctx.fillRect(this.bulletPos.x, this.bulletPos.y + 25, 25, 10)
+        this.ctx.drawImage(this.image, this.bulletPos.x + 75, this.bulletPos.y + 25, 50, 20);
         this.move()
     }
     move() {

@@ -3,7 +3,9 @@ class PowerUp {
         this.ctx = ctx
         this.canvasSize = canvasSize
         this.powerUpPos = { x: this.canvasSize.w + 5, y: this.canvasSize.h * .6 }
-
+        this.image = new Image()
+        this.image.src = "./img/coco.png"
+        
         this.init()
     }
 
@@ -12,8 +14,7 @@ class PowerUp {
     }
 
     draw() {
-        this.ctx.fillStyle = 'pink'
-        this.ctx.fillRect(this.powerUpPos.x, this.powerUpPos.y, 50, 50)
+        this.ctx.drawImage(this.image, this.powerUpPos.x, this.powerUpPos.y, 50, 50)
         this.move()
     }
     move() {

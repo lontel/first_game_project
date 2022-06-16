@@ -5,8 +5,11 @@ class Enemy {
         this.enemyPos = { x: canvasSize.w * 0.9, y: 0 }
         this.physics = { gravity: 0.4 }
         this.enemyBullets = []
-        this.enemySpeed = { x: 2, y: 1 }
+        this.enemySpeed = { x: 10, y: 1 }
         this.base = this.canvasSize.h * .8
+        this.image = new Image()
+        this.image.src = "./img/hunter.png"
+        this.audio = new Audio('./sounds/spear.wav')
 
         this.init()
     }
@@ -16,8 +19,7 @@ class Enemy {
     }
 
     draw() {
-        this.ctx.fillStyle = 'red'
-        this.ctx.fillRect(this.enemyPos.x, this.enemyPos.y, 75, 100)
+        this.ctx.drawImage(this.image, this.enemyPos.x, this.enemyPos.y , 100, 100);
         this.move()
         this.drawBullets()
     }
@@ -25,6 +27,7 @@ class Enemy {
     drawBullets() {
         this.enemyBullets.forEach(bullet => bullet.drawBullet())
         this.clearBullets()
+        this.audio.play()
     }
 
     move() {
@@ -34,8 +37,8 @@ class Enemy {
         }
         else {
             this.enemyPos.y = this.base;
-            this.enemyPos.x -= 1
-            this.enemySpeed.y = 1;
+            this.enemyPos.x -= this.enemySpeed.x
+            this.enemySpeed.y = 3;
             this.drawBullets()
         }
     }
