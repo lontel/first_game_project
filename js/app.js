@@ -14,7 +14,7 @@ const Game = {
     powerAudio: new Audio('./sounds/power.wav'),
     finalAudio: new Audio('./sounds/final.wav'),
     framesIndex: 0,
-    winningScore: 10,
+    winningScore: 20,
     enemyArr: [],
     powerUpArr: [],
     keys: {
@@ -46,12 +46,6 @@ const Game = {
         this.canvasSize.h = window.innerHeight
         this.canvasDom.setAttribute('width', this.canvasSize.w)
         this.canvasDom.setAttribute('height', this.canvasSize.h)
-    },
-
-    reset() {
-        this.enemyArr = []
-        this.powerUpArr = []
-        this.player.lives = 30000
     },
 
     gameOver() {
@@ -152,7 +146,6 @@ const Game = {
                     arr.splice(index, 1)
 
                     if (this.player.lives > 1) {
-                        console.log(this.player.lives)
                         this.player.lives--
                     } else {
                         this.gameOver()
@@ -170,9 +163,13 @@ const Game = {
                     bulletEl.playerBulletPos.x - 25 < enemy.enemyPos.x &&
                     bulletEl.playerBulletPos.y > enemy.enemyPos.y - 100 &&
                     10 - bulletEl.playerBulletPos.y < enemy.enemyPos.y) {
-                    arr.splice(index, 1)
+                    if(enemy.enemyLives > 1){
+                        enemy.enemyLives--
+                    }else{
+                        arr.splice(index, 1)
+                        this.player.score++
+                    }
                     arrb.splice(index, 1)
-                    this.player.score++
                     if (this.player.score === this.winningScore) {
                         this.enemyArr = []
                         this.powerUpArr = []
@@ -202,7 +199,6 @@ const Game = {
                 enemy.enemyPos.y > this.player.playerPos.y - 100 &&
                 10 - enemy.enemyPos.y < this.player.playerPos.y) {
                 if (this.player.lives > 0) {
-                    console.log(this.player.lives)
                     this.player.lives--
                     arr.splice(index, 1)
                 } else {

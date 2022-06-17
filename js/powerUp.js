@@ -18,8 +18,12 @@ class PowerUp {
         this.ctx.drawImage(this.image, this.powerUpPos.x, this.powerUpPos.y, 50, 50)
         this.move()
     }
-    
+
     move() {
-        this.powerUpPos.x -= 1
+        if(this.powerUpPos.x < this.canvasSize.w / 2){
+            this.powerUpPos.x -= 10
+        }else{
+            this.powerUpPos.x -= 3
+        }
     }
 }

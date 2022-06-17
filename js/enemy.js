@@ -11,6 +11,7 @@ class Enemy {
         this.image = new Image()
         this.image.src = "./img/hunter.png"
         this.audio = new Audio('./sounds/spear.wav')
+        this.enemyLives = 5
 
         this.init()
     }
@@ -47,7 +48,7 @@ class Enemy {
     createBullet() {
         this.enemyBullets.push(new EnemyBullet(this.ctx, this.enemyPos, this.canvasSize))
     }
-    
+
     clearBullets() {
         this.enemyBullets = this.enemyBullets.filter(bull => bull.bulletPos.x <= this.canvasSize.w)
     }
