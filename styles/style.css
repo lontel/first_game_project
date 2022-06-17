@@ -131,7 +131,7 @@ button:hover span {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;  
+    align-items: center;
 }
 
 #lastDiv {
@@ -142,7 +142,7 @@ button:hover span {
     align-items: center;
 }
 
-#winnerDiv img{
+#winnerDiv img {
     height: 100vh;
     display: flex;
     flex-direction: column;
