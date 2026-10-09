@@ -32,6 +32,8 @@ const Game = {
 
     init(id)
     {
+        document.querySelector('#mobile-controls').style.display =
+        window.innerWidth <= 768 ? 'flex' : 'none'
         this.canvasDom = document.querySelector(id)
         this.ctx = this.canvasDom.getContext('2d')
         this.setDimensions()
@@ -52,6 +54,7 @@ const Game = {
 
     gameOver()
     {
+        document.querySelector('#mobile-controls').style.display = 'none'
         clearInterval(this.intervalId)
         document.querySelector('#canvasID').classList.toggle("disabled")
         document.querySelector('#gameOver').classList.toggle("disabled")
@@ -381,6 +384,7 @@ const Game = {
     winning()
     {
         clearInterval(this.intervalId)
+        document.querySelector('#mobile-controls').style.display = 'none'
         document.querySelector('#canvasID').classList.toggle("disabled")
         document.querySelector('#winner').classList.toggle("disabled")
     },

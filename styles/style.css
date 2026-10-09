@@ -149,3 +149,48 @@ button:hover span {
     justify-items: flex-start;
     align-items: center;
 }
+```css
+/* Controles móviles */
+#mobile-controls {
+    display: none;
+    position: fixed;
+    bottom: 25px;
+    left: 0;
+    right: 0;
+    padding: 0 20px;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.movement-controls,
+.action-controls {
+    display: flex;
+    gap: 12px;
+}
+
+#mobile-controls button {
+    width: 60px;
+    height: 60px;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    pointer-events: auto;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+#mobile-controls button:active {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+@media (max-width: 768px) {
+    #mobile-controls {
+        display: flex;
+    }
+}
